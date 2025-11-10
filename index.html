@@ -340,144 +340,105 @@
         </div>
     </div>
 
-    <script>
-        // تفعيل الأنيميشن عند التمرير
-        document.addEventListener('DOMContentLoaded', function() {
-            // تفعيل العناصر المنزلقة
-            const slideInElements = document.querySelectorAll('.slide-in, .fade-in');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        setTimeout(() => {
-                            entry.target.classList.add('active');
-                        }, 100);
-                    }
-                });
-            }, { 
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            });
-            
-            slideInElements.forEach(el => {
-                observer.observe(el);
-            });
-            
-            // 🔴 استبدل هذه القيم بمعلومات حسابك الفعلية من EmailJS
-            const EMAILJS_CONFIG = {
-                PUBLIC_KEY: "استبدل_بالمفتاح_العام_الخاص_بك",
-                SERVICE_ID: "استبدل_بمعرف_الخدمة", 
-                TEMPLATE_ID: "استبدل_بمعرف_القالب"
-            };
-            
-            // تهيئة EmailJS بالمفتاح الصحيح
-            if (EMAILJS_CONFIG.PUBLIC_KEY !== "استبدل_بالمفتاح_العام_الخاص_بك") {
-                emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
-            }
-            
-            // معالجة إرسال النموذج
-            document.getElementById('contactForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // جمع البيانات من النموذج
-                const name = document.getElementById('name').value;
-                const phone = document.getElementById('phone').value;
-                const inquiry = document.getElementById('inquiry').value;
-                
-                // التحقق من صحة البيانات
-                if (!name || !phone || !inquiry) {
-                    alert('يرجى ملء جميع الحقول المطلوبة');
-                    return;
-                }
-                
-                // إظهار حالة التحميل
-                const submitBtn = document.querySelector('#contactForm button[type="submit"]');
-                const submitText = document.getElementById('submitText');
-                const submitSpinner = document.getElementById('submitSpinner');
-                
-                submitText.textContent = 'جاري الإرسال...';
-                submitSpinner.classList.remove('hidden');
-                submitBtn.disabled = true;
-                
-                // إرسال البيانات إلى البريد الإلكتروني
-                if (EMAILJS_CONFIG.PUBLIC_KEY !== "استبدل_بالمفتاح_العام_الخاص_بك") {
-                    emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.TEMPLATE_ID, {
-                        from_name: name,
-                        phone_number: phone,
-                        message: inquiry,
-                        to_email: "micheal1242002@gmail.com",
-                        date: new Date().toLocaleDateString('ar-EG'),
-                        time: new Date().toLocaleTimeString('ar-EG')
-                    })
-                    .then(function(response) {
-                        console.log('تم الإرسال بنجاح!', response.status, response.text);
-                        showSuccessModal();
-                    })
-                    .catch(function(error) {
-                        console.log('فشل الإرسال...', error);
-                        handleSubmissionError(error);
-                    })
-                    .finally(function() {
-                        resetSubmitButton(submitBtn, submitText, submitSpinner);
-                    });
-                } else {
-                    // محاكاة الإرسال الناجح إذا لم يتم إعداد EmailJS
-                    setTimeout(() => {
-                        showSuccessModal();
-                        resetSubmitButton(submitBtn, submitText, submitSpinner);
-                    }, 1500);
-                }
-            });
-            
-            function showSuccessModal() {
-                const modal = document.getElementById('successModal');
-                const modalContent = document.getElementById('modalContent');
-                
-                modal.classList.remove('hidden');
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // تفعيل العناصر المنزلقة
+    const slideInElements = document.querySelectorAll('.slide-in, .fade-in');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
                 setTimeout(() => {
-                    modalContent.classList.remove('scale-95', 'opacity-0');
-                    modalContent.classList.add('scale-100', 'opacity-100');
-                }, 10);
-                
-                // إعادة تعيين النموذج
-                document.getElementById('contactForm').reset();
+                    entry.target.classList.add('active');
+                }, 100);
             }
-            
-            function handleSubmissionError(error) {
-                let errorMessage = 'عذراً، حدث خطأ أثناء إرسال الاستفسار. ';
-                
-                if (error.text && error.text.includes('Public Key')) {
-                    errorMessage = '❌ خطأ في إعداد البريد الإلكتروني: المفتاح العام غير صحيح. ';
-                    errorMessage += 'يرجى التحقق من إعدادات EmailJS.';
-                } else if (error.text) {
-                    errorMessage += 'تفاصيل الخطأ: ' + error.text;
-                } else {
-                    errorMessage += 'يرجى المحاولة مرة أخرى أو الاتصال بنا مباشرة.';
-                }
-                
-                alert(errorMessage);
-            }
-            
-            function resetSubmitButton(btn, text, spinner) {
-                text.innerHTML = 'إرسال الاستفسار <i class="fas fa-paper-plane mr-2"></i>';
-                spinner.classList.add('hidden');
-                btn.disabled = false;
-            }
-            
-            // إغلاق النافذة
-            document.getElementById('closeModal').addEventListener('click', function() {
-                const modal = document.getElementById('successModal');
-                const modalContent = document.getElementById('modalContent');
-                
-                modalContent.classList.remove('scale-100', 'opacity-100');
-                modalContent.classList.add('scale-95', 'opacity-0');
-                
-                setTimeout(() => {
-                    modal.classList.add('hidden');
-                }, 300);
-            });
         });
-    </script>
+    }, { 
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+    slideInElements.forEach(el => observer.observe(el));
+
+    // ✅ إعدادات EmailJS
+    const EMAILJS_CONFIG = {
+        PUBLIC_KEY: "tt1l2zQdZWi63hXuA",
+        SERVICE_ID: "service_z54c69p",
+        TEMPLATE_ID: "template_ak7rlsg"
+    };
+
+    emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+
+    // ✅ معالجة إرسال النموذج
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const name = document.getElementById('name').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const inquiry = document.getElementById('inquiry').value.trim();
+
+        if (!name || !phone || !inquiry) {
+            alert('يرجى ملء جميع الحقول المطلوبة');
+            return;
+        }
+
+        const submitBtn = document.querySelector('#contactForm button[type="submit"]');
+        const submitText = document.getElementById('submitText');
+        const submitSpinner = document.getElementById('submitSpinner');
+
+        submitText.textContent = 'جاري الإرسال...';
+        submitSpinner.classList.remove('hidden');
+        submitBtn.disabled = true;
+
+        emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.TEMPLATE_ID, {
+            from_name: name,
+            phone_number: phone,
+            message: inquiry,
+            to_email: "osoolmousacontracting@gmail.com",
+            date: new Date().toLocaleDateString('ar-EG'),
+            time: new Date().toLocaleTimeString('ar-EG')
+        })
+        .then(function(response) {
+            console.log('✅ تم الإرسال بنجاح!', response.status, response.text);
+            showSuccessModal();
+        })
+        .catch(function(error) {
+            console.error('❌ فشل الإرسال:', error);
+            alert('حدث خطأ أثناء الإرسال، حاول مرة أخرى لاحقاً.');
+        })
+        .finally(function() {
+            resetSubmitButton(submitBtn, submitText, submitSpinner);
+        });
+    });
+
+    function showSuccessModal() {
+        const modal = document.getElementById('successModal');
+        const modalContent = document.getElementById('modalContent');
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+            modalContent.classList.remove('scale-95', 'opacity-0');
+            modalContent.classList.add('scale-100', 'opacity-100');
+        }, 10);
+        document.getElementById('contactForm').reset();
+    }
+
+    function resetSubmitButton(btn, text, spinner) {
+        text.innerHTML = 'إرسال الاستفسار <i class="fas fa-paper-plane mr-2"></i>';
+        spinner.classList.add('hidden');
+        btn.disabled = false;
+    }
+
+    document.getElementById('closeModal').addEventListener('click', function() {
+        const modal = document.getElementById('successModal');
+        const modalContent = document.getElementById('modalContent');
+        modalContent.classList.remove('scale-100', 'opacity-100');
+        modalContent.classList.add('scale-95', 'opacity-0');
+        setTimeout(() => {
+            modal.classList.add('hidden');
+        }, 300);
+    });
+});
+</script>
+
  
 <footer class="footer-section fixed bottom-0 left-0 w-full z-50  ">
   <div class="footer-background">
