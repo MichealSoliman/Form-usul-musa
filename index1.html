@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أصول موسى</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #1c93a8;
+            --primary-dark: #16788a;
+            --primary-light: #2ab3cc;
+        }
+        
+        * {
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            overflow-x: hidden;
+            /* مساحة للفوتر الثابت */
+        }
+        
+        .logo-circle {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+            box-shadow: 0 4px 15px rgba(28, 147, 168, 0.3);
+        }
+        
+        .featured-image {
+            background: linear-gradient(135deg, rgba(28, 147, 168, 0.1) 0%, rgba(42, 179, 204, 0.05) 100%), 
+                        url('./img/2542e3d6-b656-4412-9df8-593c248f1b46.jpeg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            animation: scaleAnimation 8s ease-in-out infinite;
+            min-height: 500px;
+            width: 100%;
+        }
+        
+        @keyframes scaleAnimation {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.03);
+            }
+        }
+        
+        .featured-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(28, 147, 168, 0.4) 0%, rgba(42, 179, 204, 0.2) 100%);
+            z-index: 1;
+        }
+        
+        .image-overlay-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            padding: 40px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .floating-btn {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .floating-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .form-input:focus {
+            box-shadow: 0 0 0 3px rgba(28, 147, 168, 0.2);
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(28, 147, 168, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(28, 147, 168, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(28, 147, 168, 0);
+            }
+        }
+        
+        .slide-in {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .slide-in.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.6s ease;
+        }
+        
+        .fade-in.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .bounce {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+        
+        .wave {
+            animation: wave 2.5s infinite;
+        }
+        
+        @keyframes wave {
+            0% { transform: rotate(0deg); }
+            10% { transform: rotate(14deg); }
+            20% { transform: rotate(-8deg); }
+            30% { transform: rotate(14deg); }
+            40% { transform: rotate(-4deg); }
+            50% { transform: rotate(10deg); }
+            60% { transform: rotate(0deg); }
+            100% { transform: rotate(0deg); }
+        }
+        
+        .price-banner {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 40;
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #ffffff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        /* تحسينات للشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .featured-image {
+                min-height: 300px;
+                margin-bottom: 2rem;
+                animation: scaleAnimation 10s ease-in-out infinite;
+            }
+            
+            .image-overlay-content {
+                padding: 20px;
+            }
+            
+            .form-container {
+                height: auto !important;
+            }
+            
+            .price-banner {
+                position: fixed;
+                padding: 1rem;
+            }
+            
+            .floating-buttons {
+                bottom: 80px !important;
+            }
+        }
+        
+        /* تحسينات للشاشات المتوسطة */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .featured-image {
+                min-height: 400px;
+            }
+        }
+        
+        /* تأثيرات hover محسنة */
+        .hover-lift {
+            transition: all 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* تحسينات للفوتر */
+        .footer-content {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- شريط التنقل -->
+    <header class="bg-white shadow-lg sticky top-0 z-50 transition-all duration-500">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <!-- اسم الشركة واللوجو -->
+            <div class="flex items-center slide-in">
+                <div class="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-xl overflow-hidden">
+                    <img src="./img/logo.webp" alt="شعار أصول موسى" class="w-full h-full object-cover">
+                </div>
+                <h1 class="mr-3 text-2xl font-bold text-gray-800">أصول موسى</h1>
+            </div>
+            
+            <!-- زر الاتصال -->
+            <a href="tel:0560772019" class="slide-in">
+                <button class="bg-gradient-to-r from-[var(--primary-color)] to-[var(--primary-light)] hover:from-[var(--primary-dark)] hover:to-[var(--primary-color)] text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg pulse-animation">
+                    <i class="fas fa-phone ml-2"></i>اتصل بنا
+                </button>
+            </a>
+        </div>
+    </header>
+
+    <!-- قسم الصورة والفورم -->
+    <section class="py-8 md:py-[150px]">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
+                <!-- الصورة - تظهر بكامل العرض على الشاشات الصغيرة -->
+                <div class="featured-image fade-in">
+                    <div class="image-overlay-content">
+                    
+                  
+                        <div class="flex flex-wrap gap-4">
+                            
+                           
+                        </div>
+                    </div>
+                </div>
+
+                <!-- نموذج الاتصال -->
+                <div class="fade-in form-container" style="height: auto;">
+                    <div class="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-2xl p-6 md:p-8 h-full transform transition-all duration-500 hover:shadow-2xl hover-lift">
+                        <h2 class="text-2xl md:text-3xl font-bold text-center mb-2 text-gray-800">تواصل معنا</h2>
+                        <p class="text-center text-gray-600 mb-6 md:mb-8">سنكون سعداء للرد على استفساراتك في أقرب وقت ممكن</p>
+                        
+                        <form id="contactForm" class="space-y-4 md:space-y-6">
+                            <div>
+                                <label for="name" class="block text-gray-700 mb-2 font-medium">الاسم الكامل</label>
+                                <div class="relative">
+                                    <input type="text" id="name" required class="form-input w-full px-4 py-3 md:py-4 border border-gray-300 rounded-xl focus:outline-none focus:border-[var(--primary-color)] transition-all duration-300">
+                                    <div class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label for="phone" class="block text-gray-700 mb-2 font-medium">رقم الهاتف</label>
+                                <div class="relative">
+                                    <input type="tel" id="phone" required class="form-input w-full px-4 py-3 md:py-4 border border-gray-300 rounded-xl focus:outline-none focus:border-[var(--primary-color)] transition-all duration-300">
+                                    <div class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
+                                        <i class="fas fa-phone"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label for="inquiry" class="block text-gray-700 mb-2 font-medium">الاستفسار</label>
+                                <div class="relative">
+                                    <textarea id="inquiry" rows="4" required class="form-input w-full px-4 py-3 md:py-4 border border-gray-300 rounded-xl focus:outline-none focus:border-[var(--primary-color)] transition-all duration-300"></textarea>
+                                    <div class="absolute left-4 top-4 text-gray-400">
+                                        <i class="fas fa-comment"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="w-full bg-gradient-to-r from-[var(--primary-color)] to-[var(--primary-light)] hover:from-[var(--primary-dark)] hover:to-[var(--primary-color)] text-white py-3 md:py-4 rounded-xl font-bold text-lg shadow-lg transform transition-all duration-300 hover:scale-[1.02] flex items-center justify-center">
+                                <span id="submitText">إرسال الاستفسار <i class="fas fa-paper-plane mr-2"></i></span>
+                                <div id="submitSpinner" class="loading-spinner hidden mr-2"></div>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    
+    <!-- نافذة التأكيد -->
+    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 hidden transition-opacity duration-300">
+        <div class="bg-white rounded-2xl p-6 md:p-8 max-w-md mx-4 transform transition-all duration-500 scale-95 opacity-0" id="modalContent">
+            <div class="text-center">
+                <div class="w-16 h-16 md:w-20 md:h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6">
+                    <i class="fas fa-check text-green-500 text-2xl md:text-3xl"></i>
+                </div>
+                <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">تم الإرسال بنجاح</h3>
+                <p class="text-gray-600 mb-6 md:mb-8">شكراً لتواصلك معنا، سنرد عليك في أقرب وقت ممكن.</p>
+                <button id="closeModal" class="bg-gradient-to-r from-[var(--primary-color)] to-[var(--primary-light)] hover:from-[var(--primary-dark)] hover:to-[var(--primary-color)] text-white px-6 md:px-8 py-2 md:py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105">
+                    موافق
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // تفعيل الأنيميشن عند التمرير
+        document.addEventListener('DOMContentLoaded', function() {
+            // تفعيل العناصر المنزلقة
+            const slideInElements = document.querySelectorAll('.slide-in, .fade-in');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('active');
+                        }, 100);
+                    }
+                });
+            }, { 
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+            
+            slideInElements.forEach(el => {
+                observer.observe(el);
+            });
+            
+            // 🔴 استبدل هذه القيم بمعلومات حسابك الفعلية من EmailJS
+            const EMAILJS_CONFIG = {
+                PUBLIC_KEY: "استبدل_بالمفتاح_العام_الخاص_بك",
+                SERVICE_ID: "استبدل_بمعرف_الخدمة", 
+                TEMPLATE_ID: "استبدل_بمعرف_القالب"
+            };
+            
+            // تهيئة EmailJS بالمفتاح الصحيح
+            if (EMAILJS_CONFIG.PUBLIC_KEY !== "استبدل_بالمفتاح_العام_الخاص_بك") {
+                emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+            }
+            
+            // معالجة إرسال النموذج
+            document.getElementById('contactForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // جمع البيانات من النموذج
+                const name = document.getElementById('name').value;
+                const phone = document.getElementById('phone').value;
+                const inquiry = document.getElementById('inquiry').value;
+                
+                // التحقق من صحة البيانات
+                if (!name || !phone || !inquiry) {
+                    alert('يرجى ملء جميع الحقول المطلوبة');
+                    return;
+                }
+                
+                // إظهار حالة التحميل
+                const submitBtn = document.querySelector('#contactForm button[type="submit"]');
+                const submitText = document.getElementById('submitText');
+                const submitSpinner = document.getElementById('submitSpinner');
+                
+                submitText.textContent = 'جاري الإرسال...';
+                submitSpinner.classList.remove('hidden');
+                submitBtn.disabled = true;
+                
+                // إرسال البيانات إلى البريد الإلكتروني
+                if (EMAILJS_CONFIG.PUBLIC_KEY !== "استبدل_بالمفتاح_العام_الخاص_بك") {
+                    emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.TEMPLATE_ID, {
+                        from_name: name,
+                        phone_number: phone,
+                        message: inquiry,
+                        to_email: "micheal1242002@gmail.com",
+                        date: new Date().toLocaleDateString('ar-EG'),
+                        time: new Date().toLocaleTimeString('ar-EG')
+                    })
+                    .then(function(response) {
+                        console.log('تم الإرسال بنجاح!', response.status, response.text);
+                        showSuccessModal();
+                    })
+                    .catch(function(error) {
+                        console.log('فشل الإرسال...', error);
+                        handleSubmissionError(error);
+                    })
+                    .finally(function() {
+                        resetSubmitButton(submitBtn, submitText, submitSpinner);
+                    });
+                } else {
+                    // محاكاة الإرسال الناجح إذا لم يتم إعداد EmailJS
+                    setTimeout(() => {
+                        showSuccessModal();
+                        resetSubmitButton(submitBtn, submitText, submitSpinner);
+                    }, 1500);
+                }
+            });
+            
+            function showSuccessModal() {
+                const modal = document.getElementById('successModal');
+                const modalContent = document.getElementById('modalContent');
+                
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modalContent.classList.remove('scale-95', 'opacity-0');
+                    modalContent.classList.add('scale-100', 'opacity-100');
+                }, 10);
+                
+                // إعادة تعيين النموذج
+                document.getElementById('contactForm').reset();
+            }
+            
+            function handleSubmissionError(error) {
+                let errorMessage = 'عذراً، حدث خطأ أثناء إرسال الاستفسار. ';
+                
+                if (error.text && error.text.includes('Public Key')) {
+                    errorMessage = '❌ خطأ في إعداد البريد الإلكتروني: المفتاح العام غير صحيح. ';
+                    errorMessage += 'يرجى التحقق من إعدادات EmailJS.';
+                } else if (error.text) {
+                    errorMessage += 'تفاصيل الخطأ: ' + error.text;
+                } else {
+                    errorMessage += 'يرجى المحاولة مرة أخرى أو الاتصال بنا مباشرة.';
+                }
+                
+                alert(errorMessage);
+            }
+            
+            function resetSubmitButton(btn, text, spinner) {
+                text.innerHTML = 'إرسال الاستفسار <i class="fas fa-paper-plane mr-2"></i>';
+                spinner.classList.add('hidden');
+                btn.disabled = false;
+            }
+            
+            // إغلاق النافذة
+            document.getElementById('closeModal').addEventListener('click', function() {
+                const modal = document.getElementById('successModal');
+                const modalContent = document.getElementById('modalContent');
+                
+                modalContent.classList.remove('scale-100', 'opacity-100');
+                modalContent.classList.add('scale-95', 'opacity-0');
+                
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            });
+        });
+    </script>
+ 
+<footer class="footer-section fixed bottom-0 left-0 w-full z-50  ">
+  <div class="footer-background">
+    <div class="footer-content">
+      <!-- الموجات المتحركة -->
+      <div class="waves-container">
+        <div class="wave wave-1"></div>
+        <div class="wave wave-2"></div>
+        <div class="wave wave-3"></div>
+      </div>
+      
+      <!-- المحتوى الرئيسي -->
+      <div class="main-content ">
+        <!-- الموقع -->
+        <div class="location-section">
+          <div class="location-icon">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <div class="location-text">
+            <span class="location-title">الموقع</span>
+            <span class="location-address">جدة - حي التيسير</span>
+          </div>
+        </div>
+
+        <!-- السعر المميز -->
+        <div class="price-section">
+          <div class="price-badge">
+            <span class="price-label">أسعارنا تبدأ من</span>
+            <div class="price-value">
+              <span class="price-amount">190,000</span>
+              <span class="price-currency">ريال</span>
+            </div>
+            <div class="price-ribbon">عرض خاص</div>
+          </div>
+        </div>
+
+        <!-- وسائل التواصل -->
+        <div class="contact-section">
+          <div class="contact-info">
+            <span class="contact-title">للحجز والاستفسار</span>
+            <div class="contact-numbers">
+              <span class="phone-number">0560772019</span>
+              <span class="phone-separator">|</span>
+              <span class="phone-number">0500054700</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer-section {
+    height: 140px;
+    margin-bottom: 0;
+    bottom: 0;
+  }
+
+  .footer-background {
+    background: linear-gradient(135deg, 
+      #0f766e 0%, 
+      #115e59 25%, 
+      #134e4a 50%, 
+      #115e59 75%, 
+      #0f766e 100%);
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    border-top: 3px solid rgba(253, 230, 138, 0.6);
+    box-shadow: 
+      0 -8px 32px rgba(15, 118, 110, 0.4),
+      0 -4px 16px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .footer-background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 20% 80%, rgba(253, 230, 138, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .waves-container {
+    position: absolute;
+    top: -10px;
+    left: 0;
+    right: 0;
+    height: 20px;
+    overflow: hidden;
+  }
+
+  .wave {
+    position: absolute;
+    width: 200%;
+    height: 100%;
+    background: rgba(253, 230, 138, 0.15);
+    border-radius: 50%;
+    animation: waveAnimation 6s linear infinite;
+  }
+
+  .wave-1 {
+    top: 0;
+    animation-delay: 0s;
+  }
+
+  .wave-2 {
+    top: 3px;
+    animation-delay: -2s;
+    opacity: 0.7;
+  }
+
+  .wave-3 {
+    top: 6px;
+    animation-delay: -4s;
+    opacity: 0.4;
+  }
+
+  @keyframes waveAnimation {
+    0% {
+      transform: translateX(0) translateY(0);
+    }
+    50% {
+      transform: translateX(-25%) translateY(-2px);
+    }
+    100% {
+      transform: translateX(-50%) translateY(0);
+    }
+  }
+
+  .footer-content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .main-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    gap: 2rem;
+    bottom: 0;
+  }
+
+  .location-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.75rem 1.5rem;
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(253, 230, 138, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .location-section:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    border-color: rgba(253, 230, 138, 0.5);
+  }
+
+  .location-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #fde68a, #f59e0b);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: #134e4a;
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+  }
+
+  .location-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .location-title {
+    font-size: 0.875rem;
+    color: #fde68a;
+    font-weight: 500;
+  }
+
+  .location-address {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: white;
+  }
+
+  .price-section {
+    display: flex;
+    align-items: center;
+  }
+
+  .price-badge {
+    background: linear-gradient(135deg, #fde68a, #f59e0b);
+    padding: 1rem 2rem;
+    border-radius: 20px;
+    position: relative;
+    box-shadow: 
+      0 8px 32px rgba(245, 158, 11, 0.4),
+      0 4px 16px rgba(0, 0, 0, 0.3);
+    transform: perspective(500px) rotateX(5deg);
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .price-badge:hover {
+    transform: perspective(500px) rotateX(0deg) scale(1.05);
+    box-shadow: 
+      0 12px 40px rgba(245, 158, 11, 0.6),
+      0 6px 20px rgba(0, 0, 0, 0.4);
+  }
+
+  .price-label {
+    display: block;
+    font-size: 0.9rem;
+    color: #134e4a;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .price-value {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .price-amount {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #134e4a;
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
+    line-height: 1;
+  }
+
+  .price-currency {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #134e4a;
+  }
+
+  .price-ribbon {
+    position: absolute;
+    top: -8px;
+    right: 20px;
+    background: #dc2626;
+    color: white;
+    padding: 0.25rem 1rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.6);
+    animation: pulse 2s infinite;
+  }
+
+  .contact-section {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1rem 1.5rem;
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(253, 230, 138, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .contact-section:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .contact-title {
+    font-size: 0.875rem;
+    color: #fde68a;
+    font-weight: 500;
+  }
+
+  .contact-numbers {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: white;
+  }
+
+  .phone-separator {
+    color: #fde68a;
+    font-weight: 300;
+  }
+
+  .footer-bottom {
+    padding: 0.75rem 2rem;
+    border-top: 1px solid rgba(253, 230, 138, 0.2);
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .guarantee-badges {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .guarantee-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #fde68a;
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(253, 230, 138, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .guarantee-badge:hover {
+    background: rgba(253, 230, 138, 0.2);
+    transform: translateY(-1px);
+  }
+
+  .guarantee-badge i {
+    font-size: 1rem;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+
+  /* تحسينات للشاشات الصغيرة */
+  @media (max-width: 768px) {
+    .footer-section {
+      height: auto;
+      position: relative;
+    }
+    
+    .main-content {
+      flex-direction: column;
+      padding: 1rem;
+      gap: 1rem;
+    }
+    
+    .price-amount {
+      font-size: 2rem;
+    }
+    
+    .guarantee-badges {
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    
+    .location-section,
+    .contact-section {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>
+</body>
+</html>
