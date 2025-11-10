@@ -249,7 +249,7 @@
             </div>
             
             <!-- زر الاتصال -->
-            <a href="tel:0560772019" class="slide-in">
+            <a href="tel:0560762204" class="slide-in">
                 <button class="bg-gradient-to-r from-[var(--primary-color)] to-[var(--primary-light)] hover:from-[var(--primary-dark)] hover:to-[var(--primary-color)] text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg pulse-animation">
                     <i class="fas fa-phone ml-2"></i>اتصل بنا
                 </button>
@@ -480,9 +480,9 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="contact-info">
             <span class="contact-title">للحجز والاستفسار</span>
             <div class="contact-numbers">
-              <span class="phone-number">0560772019</span>
+              <span class="phone-number">0560762204</span>
               <span class="phone-separator">|</span>
-              <span class="phone-number">0500054700</span>
+              <span class="phone-number">0560773208</span>
             </div>
           </div>
         </div>
@@ -829,5 +829,59 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 </style>
+<!-- أزرار الاتصال والواتساب الثابتة -->
+<style>
+  .fixed-buttons {
+    position: fixed;
+    bottom: 20px;;
+    left: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 9999;
+  }
+
+  .fixed-buttons a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 24px;
+    text-decoration: none;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    transition: transform 0.2s;
+  }
+
+  .fixed-buttons a:hover {
+    transform: scale(1.1);
+  }
+
+  .call-btn {
+    background: #28a745; /* أخضر */
+  }
+
+  .whatsapp-btn {
+    background: #25D366; /* أخضر واتساب */
+  }
+</style>
+
+<div class="fixed-buttons">
+  <!-- زر الاتصال -->
+  <a href="tel:0560762204" class="call-btn" title="اتصل بنا">
+    <i class="fas fa-phone"></i>
+  </a>
+
+  <!-- زر الواتساب -->
+  <a href="https://wa.me/966560773208" class="whatsapp-btn" target="_blank" title="واتساب">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+</div>
+
+<!-- لا تنسى تضمين FontAwesome -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
 </body>
 </html>
